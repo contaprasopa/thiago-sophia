@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thiago & Sophia 💑</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec, #ffe8f4);
+      color: #4a2c2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .heart {
+      font-size: 2rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .counter {
+      font-size: 1.5rem;
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      margin-top: 1rem;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      font-size: 0.9rem;
+      color: #a06666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Thiago & Sophia <span class="heart">❤️</span></h1>
+  <p>Estamos juntos há:</p>
+  <div class="counter" id="counter"></div>
+
+  <footer>Desde 03 de Março de 2024</footer>
+
+  <script>
+    const startDate = new Date("2024-03-03T00:00:00");
+    const counter = document.getElementById("counter");
+
+    function updateCounter() {
+      const now = new Date();
+      const diff = now - startDate;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      counter.innerHTML = `
+        <strong>${days}</strong> dias,
+        <strong>${hours}</strong> horas,
+        <strong>${minutes}</strong> minutos e
+        <strong>${seconds}</strong> segundos 💞
+      `;
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
