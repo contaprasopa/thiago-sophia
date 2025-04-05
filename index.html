@@ -63,24 +63,33 @@
     const startDate = new Date("2024-03-03T00:00:00");
     const counter = document.getElementById("counter");
 
+    function getDateParts(fromDate, toDate) {
+      let years = toDate.getFullYear() - fromDate.getFullYear();
+      let months = toDate.getMonth() - fromDate.getMonth();
+      let days = toDate.getDate() - fromDate.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      return { years, months, days };
+    }
+
     function updateCounter() {
       const now = new Date();
-      let diff = Math.floor((now - startDate) / 1000); // diferença em segundos
+      const { years, months, days } = getDateParts(startDate, now);
 
-      const years = Math.floor(diff / (365 * 24 * 60 * 60));
-      diff -= years * 365 * 24 * 60 * 60;
-
-      const months = Math.floor(diff / (30 * 24 * 60 * 60)); // aprox: 30 dias
-      diff -= months * 30 * 24 * 60 * 60;
-
-      const days = Math.floor(diff / (24 * 60 * 60));
-      diff -= days * 24 * 60 * 60;
-
-      const hours = Math.floor(diff / (60 * 60));
-      diff -= hours * 60 * 60;
-
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff % 60;
+      const diffInSeconds = Math.floor((now - startDate) / 1000);
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
 
       counter.innerHTML = `
         <strong>${years}</strong> ${years === 1 ? "ano" : "anos"},
