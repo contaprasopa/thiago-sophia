@@ -64,14 +64,17 @@
     const counter = document.getElementById("counter");
 
     function getDateParts(fromDate, toDate) {
-      let years = toDate.getFullYear() - fromDate.getFullYear();
-      let months = toDate.getMonth() - fromDate.getMonth();
-      let days = toDate.getDate() - fromDate.getDate();
+      const start = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
+      const end = new Date(toDate.getFullYear(), toDate.getMonth(), toDate.getDate());
+
+      let years = end.getFullYear() - start.getFullYear();
+      let months = end.getMonth() - start.getMonth();
+      let days = end.getDate() - start.getDate();
 
       if (days < 0) {
         months--;
-        const prevMonth = new Date(toDate.getFullYear(), toDate.getMonth(), 0);
-        days += prevMonth.getDate();
+        const tempDate = new Date(end.getFullYear(), end.getMonth(), 0);
+        days += tempDate.getDate();
       }
 
       if (months < 0) {
@@ -86,7 +89,6 @@
       const now = new Date();
       const { years, months, days } = getDateParts(startDate, now);
 
-      const diffInSeconds = Math.floor((now - startDate) / 1000);
       const hours = now.getHours();
       const minutes = now.getMinutes();
       const seconds = now.getSeconds();
