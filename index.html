@@ -65,18 +65,30 @@
 
     function updateCounter() {
       const now = new Date();
-      const diff = now - startDate;
+      let diff = Math.floor((now - startDate) / 1000); // diferença em segundos
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
+      const years = Math.floor(diff / (365 * 24 * 60 * 60));
+      diff -= years * 365 * 24 * 60 * 60;
+
+      const months = Math.floor(diff / (30 * 24 * 60 * 60)); // aprox: 30 dias
+      diff -= months * 30 * 24 * 60 * 60;
+
+      const days = Math.floor(diff / (24 * 60 * 60));
+      diff -= days * 24 * 60 * 60;
+
+      const hours = Math.floor(diff / (60 * 60));
+      diff -= hours * 60 * 60;
+
+      const minutes = Math.floor(diff / 60);
+      const seconds = diff % 60;
 
       counter.innerHTML = `
-        <strong>${days}</strong> dias,
-        <strong>${hours}</strong> horas,
-        <strong>${minutes}</strong> minutos e
-        <strong>${seconds}</strong> segundos 💞
+        <strong>${years}</strong> ${years === 1 ? "ano" : "anos"},
+        <strong>${months}</strong> ${months === 1 ? "mês" : "meses"},
+        <strong>${days}</strong> ${days === 1 ? "dia" : "dias"},
+        <strong>${hours}</strong> ${hours === 1 ? "hora" : "horas"},
+        <strong>${minutes}</strong> ${minutes === 1 ? "minuto" : "minutos"} e
+        <strong>${seconds}</strong> ${seconds === 1 ? "segundo" : "segundos"} 💞
       `;
     }
 
